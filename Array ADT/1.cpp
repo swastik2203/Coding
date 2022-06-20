@@ -152,16 +152,248 @@ float Avg(struct Array arr)
     return (float)Sum(arr) / arr.length;
 }
 
+void Reverse(struct Array *arr)
+{
+    int size = arr->length*sizeof(int);
+    int B[size];
+    int i,j=0;
+    for (i = arr->length - 1; i>=0; i--)
+    {
+        B[j] = arr->A[i];
+        j++;
+    }
+    for (i = 0; i<arr->length; i++)
+    {
+        arr->A[i] = B[i];
+    }
+}
+
+void Reverse2(struct Array *arr)
+{
+   int j = arr->length -1;
+
+   for (int i = 0; i < j; i++)
+   {
+    int temp = arr->A[j];
+    arr->A[j] = arr->A[i];
+    arr->A[i] = temp;
+
+    j--;
+   }
+   
+}
+
+void InsertSort(struct Array *arr, int x)
+{
+    if (arr->length == arr->size)
+        return;
+    
+    int i = arr->length - 1;
+    while (i>=0 && arr->A[i]>x) 
+    {
+        arr->A[i+1] = arr->A[i];
+        i--;
+    }
+    arr->A[i+1] = x;
+    arr->length++;
+}
+
+int IsSorted(struct Array arr)
+{
+    for (int i = 0; i < arr.length-1; i++)
+    {
+        if(arr.A[i]>arr.A[i+1])
+          return 0;
+    }
+    return 1; 
+}
+
+void Rearrange(struct Array *arr)
+{
+    int i = 0,j = arr->length-1;
+    while (i<j)
+    {
+        while(arr->A[i]<0)
+          i++;
+
+        while(arr->A[j]>=0)
+          j--;
+
+        if(i<j)
+          swap(&arr->A[i],&arr->A[j]);
+    }   
+}
+
+void Merge(struct Array *arr, struct Array *arr1, struct Array *arr2)
+{
+    int m = arr->length;
+    int n = arr1->length;
+    int i = 0, j = 0, k = 0;
+
+    while (i<m and j<n)
+    {
+        if (arr->A[i]<arr1->A[j])
+        {
+            arr2->A[k] = arr->A[i];
+            i++;
+            k++;
+        }
+        if (arr1->A[j]<arr->A[i])
+        {
+            arr2->A[k] = arr1->A[j];
+            j++;
+            k++;
+        }   
+    }
+    for (; i < m; i++)
+    {
+        arr2->A[k] = arr->A[i];
+        k++;
+    }
+     for (; j < n; j++)
+    {
+        arr2->A[k] = arr1->A[j];
+        k++;
+    }    
+}
+
+void Union(struct Array *arr, struct Array *arr1, struct Array *arr2)
+{
+    int m = arr->length;
+    int n = arr1->length;
+    int i = 0, j = 0, k = 0;
+
+    while (i<m and j<n)
+    {
+        if (arr->A[i] == arr1->A[j])
+        {
+            arr2->A[k] = arr->A[i];
+            k++;
+            i++;
+            j++;
+        }
+        
+        else if (arr->A[i]<arr1->A[j])
+        {
+            arr2->A[k] = arr->A[i];
+            i++;
+            k++;
+        }
+        else if (arr1->A[j]<arr->A[i])
+        {
+            arr2->A[k] = arr1->A[j];
+            j++;
+            k++;
+        }   
+    }
+    for (; i < m; i++)
+    {
+        arr2->A[k] = arr->A[i];
+        k++;
+    }
+     for (; j < n; j++)
+    {
+        arr2->A[k] = arr1->A[j];
+        k++;
+    }
+    arr2->length = k;
+}
+
+void Intersection(struct Array *arr, struct Array *arr1, struct Array *arr2)
+{
+    int m = arr->length;
+    int n = arr1->length;
+    int i = 0, j = 0, k = 0;
+
+    while (i<m and j<n)
+    {
+        if (arr->A[i] == arr1->A[j])
+        {
+            arr2->A[k] = arr->A[i];
+            k++;
+            i++;
+            j++;
+        }
+        
+        else if (arr->A[i]<arr1->A[j])
+        {
+            i++;
+        }
+        else if (arr1->A[j]<arr->A[i])
+        {
+            j++;
+        }   
+    }
+
+    arr2->length = k;
+}
+
+void Difference(struct Array *arr, struct Array *arr1, struct Array *arr2)
+{
+    int m = arr->length;
+    int n = arr1->length;
+    int i = 0, j = 0, k = 0;
+
+    while (i<m and j<n)
+    {
+        if (arr->A[i] == arr1->A[j])
+        {
+            i++;
+            j++;
+        }
+        
+        else if (arr->A[i]<arr1->A[j])
+        {
+            arr2->A[k] = arr->A[i];
+            i++;
+            k++;
+        }
+        else if (arr1->A[j]<arr->A[i])
+        {
+            j++;
+        }   
+    }
+    for (; i < m; i++)
+    {
+        arr2->A[k] = arr->A[i];
+        k++;
+    }
+     
+    arr2->length = k;
+}
+
+
+
+
+
+
 
 int main()
 {
-    struct Array arr1 = {{2, 3, 4, 5, 6}, 10, 5};
-    Append(&arr1, 10); // passing address of struct Array so that we can perform some changes
+    struct Array arr = {{2, 6, 10, 15, 25}, 10, 5};
+    struct Array arr1 = {{3, 6, 7, 15, 20},10, 5};
+    struct Array arr2 = {{0},10,0};
+    //Append(&arr, 10); // passing address of struct Array so that we can perform some changes
 
-    Insert(arr1, 0, 12); // passing the struct and receiving as an refernce
+    //Insert(arr, 0, 12); // passing the struct and receiving as an refernce
 
-    Delete(&arr1, 0);
+    //Delete(&arr, 0);
 
-    Display(arr1); // PASSING STRUCT Array DIRECTLY we can't change the arr there
+    // Reverse2(&arr);
+
+    // InsertSort(&arr,18);
+
+    // Rearrange(&arr);
+    // Display(arr2);
+
+    // Merge(&arr,&arr1,&arr2);
+
+    Difference(&arr, &arr1, &arr2);
+
+    Display(arr2); // PASSING STRUCT Array DIRECTLY we can't change the arr there
+
+    
+
+    cout<<endl<<IsSorted(arr);
     return 0;
 }

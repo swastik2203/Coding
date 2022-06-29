@@ -32,7 +32,7 @@ void LowerTri::Set(int i, int j, int x)
 {
     if (i >= j)
         A[i*(i - 1)/2 + (j-1)] = x; //Row major formula  i*(i-1)/2 + j-1
-                            //Column major formula n * (j - 1) + (j - 2) * (j - 1) / 2 + i - j
+                            //Column major formula n * (j - 1) - (j - 2) * (j - 1) / 2 + i - j
 }
 int LowerTri::Get(int i, int j)
 {

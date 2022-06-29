@@ -335,6 +335,7 @@ Array *Array::Diff(Array arr2)
 int main()
 {
     Array *arr1;
+    Array *arr2;
     int ch, sz;
     int x, index;
 
@@ -350,7 +351,8 @@ int main()
         cout << "3. Search\n";
         cout << "4. Sum\n";
         cout << "5. Display\n";
-        cout << "6.Exit\n";
+        cout << "6.Merge\n";
+        cout << "7.Exit\n";
 
         cout << "enter you choice ";
         cin >> ch;
@@ -360,7 +362,7 @@ int main()
         case 1:
             cout << "Enter an element and index ";
             cin >> x >> index;
-            arr1->Insert(index, x);
+            arr1->Insert(index, x);  
             break;
         case 2:
             cout << "Enter index ";
@@ -379,7 +381,11 @@ int main()
             break;
         case 5:
             arr1->Display();
+            break;
+        case 6:
+            Array *arr3 = arr1->Merge(*arr2); 
+            break;    
         }
-    } while (ch < 6);
+    } while (ch < 7);
     return 0;
 }
